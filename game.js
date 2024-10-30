@@ -47,6 +47,10 @@ class Game {
         this.gameArea.addEventListener('touchstart', (e) => {
             e.preventDefault(); // 防止默认行为
         }, { passive: false });
+        
+        // 增加特殊目标的概率和数量
+        this.bombProbability = 0.3; // 增加到30%的概率
+        this.maxBombs = 3; // 最多同时存在3个特殊目标
     }
 
     init() {
@@ -81,8 +85,15 @@ class Game {
     spawnTarget() {
         if (this.activeTargets.size >= this.maxTargets) return;
 
+        // 计算当前特殊目标的数量
+        const currentBombs = Array.from(this.activeTargets)
+            .filter(target => target.classList.contains('bomb')).length;
+
+        // 决定是否生成特殊目标
+        const isBomb = currentBombs < this.maxBombs && Math.random() < this.bombProbability;
+        
         const target = document.createElement('div');
-        target.className = 'target';
+        target.className = isBomb ? 'target bomb' : 'target';
         
         // 根据关卡选择不同的运动方式
         if (this.currentConfig.movePattern === 'random') {
@@ -123,13 +134,13 @@ class Game {
         
         // 添加头像图片
         const img = document.createElement('img');
-        img.src = 'avatar.png';
+        img.src = isBomb ? 'bomb.png' : 'avatar.png'; // 需要准备一个bomb.png图片
         target.appendChild(img);
 
-        target.addEventListener('click', (e) => this.hitTarget(target));
+        target.addEventListener('click', (e) => this.hitTarget(target, isBomb));
         target.addEventListener('touchstart', (e) => {
             e.preventDefault();
-            this.hitTarget(target);
+            this.hitTarget(target, isBomb);
         }, { passive: false });
         
         this.gameArea.appendChild(target);
@@ -316,15 +327,15 @@ class Game {
         }
     }
 
-    hitTarget(target) {
+    hitTarget(target, isBomb) {
+        if (isBomb) {
+            this.gameOver();
+            return;
+        }
+        
+        // 原有的hitTarget逻辑
         this.score += 1;
         this.scoreElement.textContent = this.score;
-        
-        // 检查是否需要升级
-        const nextLevel = this.level + 1;
-        if (this.score >= this.currentConfig.scoreToNext && this.levelConfigs[nextLevel]) {
-            this.updateLevel(nextLevel);
-        }
         
         this.hitSound.currentTime = 0;
         this.hitSound.play();
@@ -357,6 +368,50 @@ class Game {
                 this.gameArea.removeChild(explosion);
             }
         }, 300);  // 与动画时间匹配
+    }
+
+    gameOver() {
+        // 停止游戏
+        this.isGameActive = false;
+        clearInterval(this.spawnInterval);
+        
+        // 创建游戏结束界面
+        const gameOverScreen = document.createElement('div');
+        gameOverScreen.className = 'game-over';
+        gameOverScreen.innerHTML = `
+            <div class="game-over-card">
+                <h2>GAME OVER</h2>
+                <p>FINAL SCORE: ${this.score}</p>
+                <button class="pixel-button" onclick="game.restart()">RESTART</button>
+            </div>
+        `;
+        
+        this.gameArea.appendChild(gameOverScreen);
+        
+        // 清除所有目标
+        this.activeTargets.forEach(target => {
+            if (this.gameArea.contains(target)) {
+                this.gameArea.removeChild(target);
+            }
+        });
+        this.activeTargets.clear();
+        this.animations.clear();
+    }
+
+    restart() {
+        // 移除游戏结束界面
+        const gameOverScreen = document.querySelector('.game-over');
+        if (gameOverScreen) {
+            gameOverScreen.remove();
+        }
+        
+        // 重置游戏状态
+        this.score = 0;
+        this.scoreElement.textContent = '0';
+        this.isGameActive = true;
+        
+        // 重新开始当前关卡
+        this.updateLevel(this.level);
     }
 }
 
