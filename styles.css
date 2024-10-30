@@ -11,6 +11,7 @@ body {
     position: relative;
     overflow: hidden;
     cursor: pointer;
+    touch-action: none;
 }
 
 .score-board {
@@ -61,4 +62,78 @@ body {
         transform: scale(2);
         opacity: 0;
     }
-} 
+}
+
+.level-buttons {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.level-buttons button {
+    padding: 5px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.level-buttons button:hover {
+    background-color: #45a049;
+}
+
+.level-buttons button:active {
+    background-color: #3d8b40;
+}
+
+.level-buttons .random-level {
+    background-color: #ff4081;
+}
+
+.level-buttons .random-level:hover {
+    background-color: #e91e63;
+}
+
+.level-buttons .random-level:active {
+    background-color: #c2185b;
+}
+
+/* 添加移动端适配的样式 */
+@media screen and (max-width: 768px) {
+    .score-board {
+        width: 90%;
+        font-size: 18px;
+        padding: 8px 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .level-buttons {
+        margin-top: 8px;
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .level-buttons button {
+        flex: 1 1 40%;
+        margin: 2px;
+    }
+
+    .target {
+        width: 60px;  /* 移动端缩小目标大小 */
+        height: 60px;
+    }
+}
+
+/* 禁用双击缩放 */
+* {
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
