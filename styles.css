@@ -117,7 +117,7 @@ body {
     height: 100px;
     cursor: pointer;
     z-index: 10;
-    filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
+    transform: translate(-50%, -50%);
 }
 
 .target img {
@@ -307,6 +307,29 @@ body {
 /* 移动端适配时也保持一致大小 */
 @media screen and (max-width: 768px) {
     .target, .target.bomb {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+/* 添加打地鼠动画样式 */
+.target.mole-animation {
+    transition: top 0.3s ease-out;
+}
+
+/* 修改目标样式，使其在打地鼠模式下更合适 */
+.target {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    z-index: 10;
+    transform: translate(-50%, -50%);
+}
+
+/* 移动端适配 */
+@media screen and (max-width: 768px) {
+    .target {
         width: 60px;
         height: 60px;
     }

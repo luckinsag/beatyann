@@ -51,6 +51,19 @@ class Game {
         // 增加特殊目标的概率和数量
         this.bombProbability = 0.3; // 增加到30%的概率
         this.maxBombs = 3; // 最多同时存在3个特殊目标
+        
+        // 添加打地鼠模式的位置配置
+        this.molePositions = [
+            { x: '20%', y: '20%' },
+            { x: '50%', y: '20%' },
+            { x: '80%', y: '20%' },
+            { x: '20%', y: '50%' },
+            { x: '50%', y: '50%' },
+            { x: '80%', y: '50%' },
+            { x: '20%', y: '80%' },
+            { x: '50%', y: '80%' },
+            { x: '80%', y: '80%' }
+        ];
     }
 
     init() {
@@ -96,7 +109,10 @@ class Game {
         target.className = isBomb ? 'target bomb' : 'target';
         
         // 根据关卡选择不同的运动方式
-        if (this.currentConfig.movePattern === 'random') {
+        if (this.level === 1) {
+            // 打地鼠模式
+            this.moveMole(target);
+        } else if (this.currentConfig.movePattern === 'random') {
             // 随机选择一种运动方式
             const patterns = ['linear', 'parabola', 'zigzag', 'spiral', 'bounce'];
             const randomPattern = patterns[Math.floor(Math.random() * patterns.length)];
@@ -317,6 +333,34 @@ class Game {
 
         this.animations.set(target, animate);
         requestAnimationFrame(animate);
+    }
+
+    moveMole(target) {
+        // 随机选择一个位置
+        const position = this.molePositions[Math.floor(Math.random() * this.molePositions.length)];
+        
+        // 设置初始位置（从下方出现）
+        target.style.left = position.x;
+        target.style.top = '100%';
+        
+        // 添加动画类
+        target.classList.add('mole-animation');
+        
+        // 设置最终位置
+        setTimeout(() => {
+            target.style.top = position.y;
+        }, 50);
+
+        // 设置消失时间
+        setTimeout(() => {
+            if (this.gameArea.contains(target)) {
+                // 添加消失动画
+                target.style.top = '100%';
+                setTimeout(() => {
+                    this.removeTarget(target);
+                }, 300);
+            }
+        }, 2000);
     }
 
     removeTarget(target) {
