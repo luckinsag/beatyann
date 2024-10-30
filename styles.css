@@ -21,10 +21,12 @@ body {
     transform: translateX(-50%);
     font-size: 24px;
     font-weight: bold;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.9);
     padding: 10px 20px;
     border-radius: 10px;
     z-index: 1000;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 #game-area {
@@ -105,28 +107,69 @@ body {
 /* 添加移动端适配的样式 */
 @media screen and (max-width: 768px) {
     .score-board {
-        width: 90%;
+        width: 85%;
+        font-size: 16px;
+        padding: 8px 10px;
+        top: 10px;
+    }
+
+    .score-info {
+        flex-direction: row;
+        gap: 15px;
+        margin-bottom: 8px;
+    }
+
+    .score-item {
         font-size: 18px;
-        padding: 8px 12px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+    }
+
+    .score-item span {
+        font-size: 20px;
+        color: #4CAF50;
     }
 
     .level-buttons {
-        margin-top: 8px;
-        width: 100%;
-        flex-wrap: wrap;
+        margin-top: 5px;
+        gap: 5px;
     }
 
     .level-buttons button {
-        flex: 1 1 40%;
-        margin: 2px;
+        padding: 6px 8px;
+        font-size: 14px;
+        flex: 1;
+        white-space: nowrap;
+        min-width: unset;
     }
 
     .target {
         width: 60px;  /* 移动端缩小目标大小 */
         height: 60px;
+    }
+}
+
+/* 超小屏幕适配 */
+@media screen and (max-width: 320px) {
+    .score-board {
+        width: 90%;
+        font-size: 14px;
+        padding: 5px 8px;
+    }
+
+    .score-info {
+        gap: 10px;
+    }
+
+    .score-item {
+        font-size: 16px;
+    }
+
+    .score-item span {
+        font-size: 18px;
+    }
+
+    .level-buttons button {
+        padding: 4px 6px;
+        font-size: 12px;
     }
 }
 

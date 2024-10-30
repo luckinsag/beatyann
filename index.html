@@ -9,12 +9,19 @@
 <body>
     <div class="game-container">
         <div class="score-board">
-            得分: <span id="score">0</span> | 关卡: <span id="level">1</span>
+            <div class="score-info">
+                <div class="score-item">
+                    得分: <span id="score">0</span>
+                </div>
+                <div class="score-item">
+                    关卡: <span id="level">1</span>
+                </div>
+            </div>
             <div class="level-buttons">
                 <button onclick="game.updateLevel(1)">关卡1</button>
                 <button onclick="game.updateLevel(2)">关卡2</button>
                 <button onclick="game.updateLevel(3)">关卡3</button>
-                <button onclick="game.updateLevel(4)" class="random-level">随机关卡</button>
+                <button onclick="game.updateLevel(4)" class="random-level">随机</button>
             </div>
         </div>
         <div id="game-area"></div>
