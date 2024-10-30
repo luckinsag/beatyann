@@ -129,19 +129,31 @@ body {
 /* 爆炸效果 */
 .explosion {
     position: absolute;
+    width: 200px;
+    height: 200px;
     pointer-events: none;
     z-index: 11;
-    animation: explode 0.5s forwards;
+    animation: explode 0.3s forwards;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translate(-50%, -50%);
+}
+
+.explosion img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 /* 动画效果 */
 @keyframes explode {
     0% {
-        transform: scale(0.5);
+        transform: scale(0.8);
         opacity: 1;
     }
     100% {
-        transform: scale(2);
+        transform: scale(1.5);
         opacity: 0;
     }
 }
@@ -176,6 +188,11 @@ body {
     .target {
         width: 60px;
         height: 60px;
+    }
+
+    .explosion {
+        width: 120px;
+        height: 120px;
     }
 }
 

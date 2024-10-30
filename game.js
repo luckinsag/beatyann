@@ -336,8 +336,15 @@ class Game {
     createExplosion(target) {
         const explosion = document.createElement('div');
         explosion.className = 'explosion';
-        explosion.style.left = target.style.left;
-        explosion.style.top = target.style.top;
+        
+        // 获取目标的位置和大小
+        const targetRect = target.getBoundingClientRect();
+        const centerX = targetRect.left + targetRect.width / 2;
+        const centerY = targetRect.top + targetRect.height / 2;
+        
+        // 设置爆炸效果的位置（居中）
+        explosion.style.left = `${centerX}px`;
+        explosion.style.top = `${centerY}px`;
         
         const img = document.createElement('img');
         img.src = 'explosion.png';
@@ -349,7 +356,7 @@ class Game {
             if (this.gameArea.contains(explosion)) {
                 this.gameArea.removeChild(explosion);
             }
-        }, 500);
+        }, 300);  // 与动画时间匹配
     }
 }
 
