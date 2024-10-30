@@ -5,23 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>打击杨尚玮</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="game-container">
         <div class="score-board">
             <div class="score-info">
                 <div class="score-item">
-                    得分: <span id="score">0</span>
+                    SCORE: <span id="score">0</span>
                 </div>
                 <div class="score-item">
-                    关卡: <span id="level">1</span>
+                    LEVEL: <span id="level">1</span>
                 </div>
             </div>
             <div class="level-buttons">
-                <button onclick="game.updateLevel(1)">关卡1</button>
-                <button onclick="game.updateLevel(2)">关卡2</button>
-                <button onclick="game.updateLevel(3)">关卡3</button>
-                <button onclick="game.updateLevel(4)" class="random-level">随机</button>
+                <button onclick="game.updateLevel(1)" class="pixel-button">LEVEL 1</button>
+                <button onclick="game.updateLevel(2)" class="pixel-button">LEVEL 2</button>
+                <button onclick="game.updateLevel(3)" class="pixel-button">LEVEL 3</button>
+                <button onclick="game.updateLevel(4)" class="pixel-button random-level">RANDOM</button>
             </div>
         </div>
         <div id="game-area"></div>

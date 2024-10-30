@@ -1,8 +1,14 @@
+/* 导入像素风格字体 */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* 基础样式 */
 body {
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
-    font-family: 'Arial', sans-serif;
+    background-color: #2C3E50;
+    font-family: 'Press Start 2P', cursive;
+    background-image: linear-gradient(45deg, #2C3E50 25%, #34495E 25%, #34495E 50%, #2C3E50 50%, #2C3E50 75%, #34495E 75%, #34495E 100%);
+    background-size: 56.57px 56.57px;
 }
 
 .game-container {
@@ -14,33 +20,104 @@ body {
     touch-action: none;
 }
 
+/* 计分板样式 */
 .score-board {
     position: fixed;
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 24px;
-    font-weight: bold;
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 10px 20px;
+    background: #2C3E50;
+    color: #ECF0F1;
+    padding: 15px 25px;
     border-radius: 10px;
-    z-index: 1000;
+    z-index: 2000;
     text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 0 10px rgba(0,0,0,0.5),
+                inset 0 0 5px rgba(255,255,255,0.2);
+    border: 3px solid #ECF0F1;
 }
 
+.score-info {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    text-shadow: 2px 2px 0 #000;
+}
+
+.score-item span {
+    color: #E74C3C;
+    margin-left: 10px;
+    animation: glow 1s ease-in-out infinite alternate;
+}
+
+/* 按钮样式 */
+.level-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.pixel-button {
+    padding: 8px 16px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    border: 3px solid #ECF0F1;
+    border-radius: 5px;
+    background-color: #3498DB;
+    color: #ECF0F1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-shadow: 1px 1px 0 #000;
+    box-shadow: 0 4px 0 #2980B9,
+                0 5px 5px rgba(0,0,0,0.2);
+}
+
+.pixel-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 #2980B9,
+                0 7px 7px rgba(0,0,0,0.2);
+}
+
+.pixel-button:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #2980B9,
+                0 3px 3px rgba(0,0,0,0.2);
+}
+
+.random-level {
+    background-color: #E74C3C;
+    box-shadow: 0 4px 0 #C0392B,
+                0 5px 5px rgba(0,0,0,0.2);
+}
+
+.random-level:hover {
+    box-shadow: 0 6px 0 #C0392B,
+                0 7px 7px rgba(0,0,0,0.2);
+}
+
+.random-level:active {
+    box-shadow: 0 2px 0 #C0392B,
+                0 3px 3px rgba(0,0,0,0.2);
+}
+
+/* 游戏区域样式 */
 #game-area {
     width: 100%;
     height: 100%;
     position: relative;
+    z-index: 1;
 }
 
+/* 目标样式 */
 .target {
     position: absolute;
     width: 100px;
     height: 100px;
-    cursor: url('hammer.png'), pointer;
-    transition: transform 0.1s;
+    cursor: pointer;
+    z-index: 10;
+    filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
 }
 
 .target img {
@@ -49,12 +126,15 @@ body {
     object-fit: contain;
 }
 
+/* 爆炸效果 */
 .explosion {
     position: absolute;
     pointer-events: none;
+    z-index: 11;
     animation: explode 0.5s forwards;
 }
 
+/* 动画效果 */
 @keyframes explode {
     0% {
         transform: scale(0.5);
@@ -66,83 +146,35 @@ body {
     }
 }
 
-.level-buttons {
-    margin-top: 10px;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
+@keyframes glow {
+    0% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #E74C3C; }
+    100% { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #E74C3C; }
 }
 
-.level-buttons button {
-    padding: 5px 15px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.level-buttons button:hover {
-    background-color: #45a049;
-}
-
-.level-buttons button:active {
-    background-color: #3d8b40;
-}
-
-.level-buttons .random-level {
-    background-color: #ff4081;
-}
-
-.level-buttons .random-level:hover {
-    background-color: #e91e63;
-}
-
-.level-buttons .random-level:active {
-    background-color: #c2185b;
-}
-
-/* 添加移动端适配的样式 */
+/* 移动端适配 */
 @media screen and (max-width: 768px) {
     .score-board {
         width: 85%;
-        font-size: 16px;
-        padding: 8px 10px;
+        padding: 10px 15px;
         top: 10px;
     }
 
     .score-info {
-        flex-direction: row;
         gap: 15px;
-        margin-bottom: 8px;
-    }
-
-    .score-item {
-        font-size: 18px;
-    }
-
-    .score-item span {
-        font-size: 20px;
-        color: #4CAF50;
+        font-size: 12px;
     }
 
     .level-buttons {
-        margin-top: 5px;
-        gap: 5px;
+        gap: 8px;
     }
 
-    .level-buttons button {
-        padding: 6px 8px;
-        font-size: 14px;
-        flex: 1;
-        white-space: nowrap;
-        min-width: unset;
+    .pixel-button {
+        padding: 6px 12px;
+        font-size: 10px;
     }
 
     .target {
-        width: 60px;  /* 移动端缩小目标大小 */
+        width: 60px;
         height: 60px;
     }
 }
@@ -150,26 +182,17 @@ body {
 /* 超小屏幕适配 */
 @media screen and (max-width: 320px) {
     .score-board {
-        width: 90%;
-        font-size: 14px;
-        padding: 5px 8px;
+        padding: 8px 12px;
     }
 
     .score-info {
         gap: 10px;
+        font-size: 10px;
     }
 
-    .score-item {
-        font-size: 16px;
-    }
-
-    .score-item span {
-        font-size: 18px;
-    }
-
-    .level-buttons button {
-        padding: 4px 6px;
-        font-size: 12px;
+    .pixel-button {
+        padding: 5px 10px;
+        font-size: 8px;
     }
 }
 
